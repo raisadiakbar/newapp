@@ -10,7 +10,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/ic_launcher_foreground"
         android:label="Mandiri News"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/placeholder_foreground"
         android:supportsRtl="true"
         android:theme="@style/Theme.Newapp"
         tools:targetApi="31">
