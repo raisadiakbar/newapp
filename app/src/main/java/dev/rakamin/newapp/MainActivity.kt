@@ -1,12 +1,14 @@
-package dev.rakamin.newapp;
+package dev.rakamin.newapp
 
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import dev.rakamin.newapp.R
+import com.bumptech.glide.Glide
 import dev.rakamin.newapp.adapter.NewsAdapter
+import dev.rakamin.newapp.model.Article
 import dev.rakamin.newapp.model.NewsResponse
 import dev.rakamin.newapp.network.NewsService
 import retrofit2.Call
@@ -15,7 +17,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NewsAdapter.OnItemClickListener {
     private lateinit var newsRecyclerView: RecyclerView
     private lateinit var newsAdapter: NewsAdapter
 
@@ -28,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         newsRecyclerView = findViewById(R.id.newsRecyclerView)
         newsRecyclerView.layoutManager = LinearLayoutManager(this)
-        newsAdapter = NewsAdapter()
+        newsAdapter = NewsAdapter(this) // Menggunakan this sebagai listener
         newsRecyclerView.adapter = newsAdapter
 
         fetchData()
@@ -42,7 +44,6 @@ class MainActivity : AppCompatActivity() {
 
         val newsService = retrofit.create(NewsService::class.java)
         val call: Call<NewsResponse> = newsService.getTopHeadlines(API_KEY, "id")
-
 
         call.enqueue(object : Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
@@ -59,5 +60,22 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "Failed to fetch news: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    override fun onItemClick(article: Article, position: Int) {
+        showNewsContent(article.content)
+    }
+
+    private fun showNewsContent(content: String?) {
+        if (!content.isNullOrEmpty()) {
+            Toast.makeText(this, content, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Menambahkan fungsi untuk memuat gambar dari URL menggunakan Glide
+    private fun loadGlideImage(imageView: ImageView, imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .into(imageView)
     }
 }
