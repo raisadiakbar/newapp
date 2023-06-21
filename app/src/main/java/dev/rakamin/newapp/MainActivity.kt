@@ -1,9 +1,11 @@
 package dev.rakamin.newapp
 
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -30,7 +32,7 @@ class MainActivity : AppCompatActivity(), NewsAdapter.OnItemClickListener {
 
         newsRecyclerView = findViewById(R.id.newsRecyclerView)
         newsRecyclerView.layoutManager = LinearLayoutManager(this)
-        newsAdapter = NewsAdapter(this) // Menggunakan this sebagai listener
+        newsAdapter = NewsAdapter(this)
         newsRecyclerView.adapter = newsAdapter
 
         fetchData()
@@ -62,20 +64,10 @@ class MainActivity : AppCompatActivity(), NewsAdapter.OnItemClickListener {
         })
     }
 
+
     override fun onItemClick(article: Article, position: Int) {
-        showNewsContent(article.content)
-    }
-
-    private fun showNewsContent(content: String?) {
-        if (!content.isNullOrEmpty()) {
-            Toast.makeText(this, content, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    // Menambahkan fungsi untuk memuat gambar dari URL menggunakan Glide
-    private fun loadGlideImage(imageView: ImageView, imageUrl: String) {
-        Glide.with(this)
-            .load(imageUrl)
-            .into(imageView)
+        val builder = CustomTabsIntent.Builder()
+        val customTabsIntent = builder.build()
+        customTabsIntent.launchUrl(this, Uri.parse(article.url))
     }
 }

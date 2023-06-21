@@ -59,7 +59,7 @@ class NewsAdapter(private val listener: OnItemClickListener) : RecyclerView.Adap
             descriptionTextView.text = article.description
 
             if (article.imageUrl.isNullOrEmpty()) {
-                imageView.setImageResource(R.drawable.placeholder_background)
+                imageView.setImageResource(R.drawable.placeholder)
             } else {
                 loadGlideImage(imageView, article.imageUrl)
             }

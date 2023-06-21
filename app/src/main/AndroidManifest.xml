@@ -13,13 +13,14 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/ic_launcher_foreground"
         android:label="Mandiri News"
         android:roundIcon="@mipmap/placeholder_foreground"
         android:supportsRtl="true"
         android:theme="@style/Theme.Newapp"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        android:icon="@drawable/placeholder">
 
+        <!-- Menggunakan logo yang ditentukan -->
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -27,6 +28,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Menambahkan logo di samping label aplikasi -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-@drawable/placeholder~yyyyyyyyyy" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.DATABASE"
+            android:value="@drawable/placeholder" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.AD_MANAGER_APP"
+            android:value="true" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.init.service_version"
+            android:value="@drawable/placeholder" />
 
     </application>
 
