@@ -15,20 +15,9 @@ class NewsAdapter(private val listener: OnItemClickListener) : RecyclerView.Adap
     private val articles: MutableList<Article> = mutableListOf()
 
     fun setData(data: List<Article>) {
-        val previousSize = articles.size
-
         articles.clear()
         articles.addAll(data)
-
-        val newSize = articles.size
-
-        if (previousSize < newSize) {
-            // New items inserted
-            notifyItemRangeInserted(previousSize, newSize - previousSize)
-        } else {
-            // Existing items changed or the list size remained the same
-            notifyItemRangeChanged(0, newSize)
-        }
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
@@ -63,14 +52,7 @@ class NewsAdapter(private val listener: OnItemClickListener) : RecyclerView.Adap
             } else {
                 loadGlideImage(imageView, article.imageUrl)
             }
-
-            itemView.setOnClickListener {
-                listener.onItemClick(article, adapterPosition)
-            }
         }
-
-
-
 
         override fun onClick(view: View) {
             val position = adapterPosition
@@ -79,18 +61,17 @@ class NewsAdapter(private val listener: OnItemClickListener) : RecyclerView.Adap
                 listener.onItemClick(article, position)
             }
         }
+
+        private fun loadGlideImage(imageView: ImageView, imageUrl: String) {
+            Glide.with(imageView)
+                .load(imageUrl)
+                .apply(RequestOptions().centerCrop())
+                .into(imageView)
+        }
     }
 
     interface OnItemClickListener {
         fun onItemClick(article: Article, position: Int)
     }
-
-    private fun loadGlideImage(imageView: ImageView, imageUrl: String) {
-        Glide.with(imageView)
-            .load(imageUrl)
-            .apply(RequestOptions().centerCrop())
-            .into(imageView)
-    }
-
 
 }
