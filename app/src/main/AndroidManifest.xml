@@ -20,7 +20,6 @@
         tools:targetApi="31"
         android:icon="@drawable/placeholder">
 
-        <!-- Menggunakan logo yang ditentukan -->
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -29,7 +28,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Menambahkan logo di samping label aplikasi -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-@drawable/placeholder~yyyyyyyyyy" />
